@@ -1,26 +1,59 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Main from './components/Main';
+import Footer from './components/Footer';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const refBio = React.createRef();
+	const refMyStuff = React.createRef();
+	const refInAddition = React.createRef();
+	const refGetInTouch = React.createRef();
+
+	const scrollToRef = (ref: React.RefObject<any>) =>
+		ref.current.scrollIntoView({
+			behavior: 'smooth',
+			block: 'start',
+		});
+
+	const scrollToRefBio = () => {
+		scrollToRef(refBio);
+	};
+
+	const scrollToRefMyStuff = () => {
+		scrollToRef(refMyStuff);
+	};
+
+	const scrollToRefInAddition = () => {
+		scrollToRef(refInAddition);
+	};
+
+	const scrollToRefGetInTouch = () => {
+		scrollToRef(refGetInTouch);
+	};
+
+	return (
+		<BrowserRouter>
+			<Header scrollToRef={scrollToRefBio} />
+			<Switch>
+				<Route
+					exact
+					path='/'
+					component={() => (
+						<Main
+							refBio={refBio}
+							refMyStuff={refMyStuff}
+							refInAddition={refInAddition}
+							scrollToRefMyStuff={scrollToRefMyStuff}
+							scrollToRefInAddition={scrollToRefInAddition}
+							scrollToRefGetInTouch={scrollToRefGetInTouch}
+						/>
+					)}
+				/>
+			</Switch>
+			<Footer refGetInTouch={refGetInTouch} />
+		</BrowserRouter>
+	);
 }
 
 export default App;
